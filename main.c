@@ -4,20 +4,26 @@
 #include<time.h>
 
 
+
+
+
+
+
+
 int main(){
     int mode;
     char buffer[50];
     
     printf("================== Modes ==================\n\n");
-    printf("1 : Mode ENSEIGNANT\n2 : Mode ETUDIANT\n");
-    printf("(1/2) : ");
+    printf("1 : Mode ENSEIGNANT\n2 : Mode ETUDIANT\n3 : Quitter\n");
+    printf("Votre choix : ");
     
     do {
         fgets(buffer, sizeof(buffer), stdin);
         mode = atoi(buffer);
-        if (mode < 1 || mode > 2)
-            printf("Mode invalide, réessayez (1/2) : ");
-    } while (mode < 1 || mode > 2);
+        if (mode < 1 || mode > 3)
+            printf("Mode invalide, réessayez : ");
+    } while (mode < 1 || mode > 3);
     
     switch(mode){
         case 1:
@@ -27,6 +33,9 @@ int main(){
         case 2:
             printf("Vous entrez dans le mode ETUDIANT\n");
             printf("Chargement ...");
+            break;
+        case 3:
+            printf("Au revoir !");
             break;
     }
     
