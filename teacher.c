@@ -3,7 +3,7 @@
 #include <string.h>
 #include "teacher.h"
 
-static int teacher_login() {
+void teacher_login() {
     char password[128];
     printf("   Mot de passe : ");
     fgets(password, sizeof(password), stdin);
