@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define TEACHER_PASSWORD "admin123"
+#include "teacher.h"
 
 static int teacher_login() {
     char password[128];
