@@ -3,7 +3,8 @@
 #include<string.h>
 #include<time.h>
 #include "teacher.h"
-
+#include "student.h"
+#include "qcm.h"
 
 
 
@@ -27,8 +28,7 @@ int main(){
     
     switch(mode){
         case 1:
-            printf("Vous entrez dans le mode ENSEIGNANT ");
-            printf("Chargement ...");
+            teacher_login();
             break;
         case 2:
             printf("Vous entrez dans le mode ETUDIANT\n");
