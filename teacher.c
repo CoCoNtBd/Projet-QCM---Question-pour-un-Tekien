@@ -2,24 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include "teacher.h"
+#include "qcm.h"
 
-void teacher_login() {
-    char password[128];
-    printf("   Mot de passe : ");
-    fgets(password, sizeof(password), stdin);
-    password[strcspn(password, "\n")] = '\0'; 
-
-    if (strcmp(password, TEACHER_PASSWORD) == 0) {
-        printf("Vous entrez dans le mode enseignant\n");
-    } else {
-        printf("Mot de passe incorrect\n");
-    }
-}
 
 void teacher_menu(){
     int choix;
     char buffer[50];
-    printf("MENU ENSEIGNANT");
+    printf("============= MENU ENSEIGNANT =============");
     printf("\n");
     printf("1 : Créer un nouveau QCM\n");
     printf("2 : Lister les QCM existants\n");
@@ -35,10 +24,10 @@ void teacher_menu(){
     
     switch(choix){
         case 1:
-            //créer une fonction pour créer un QCM
+            void creer_qcm();
             break;
         case 2:
-            //créer une fonction pour lister les QCM existants
+            void liste_qcm();
             break;
         case 3:
             printf("Au revoir !");
@@ -46,8 +35,35 @@ void teacher_menu(){
     }
 }
 
+void teacher_login() {
+    char password[128];
+    printf("   Mot de passe : ");
+    fgets(password, sizeof(password), stdin);
+    password[strcspn(password, "\n")] = '\0'; 
 
+    if (strcmp(password, TEACHER_PASSWORD) == 0) {
+        printf("Vous entrez dans le mode enseignant\n");
+        teacher_menu();
+    } else {
+        printf("Mot de passe incorrect\n");
+    }
+}
 
+void creer_qcm(){
+    QCM q = {0};
+    char buf[8];
+    printf("CREATION D'UN NOUVEAU QCM\n");
+    printf("Nom du nouveau qcm : ");
+    fgets(q.nom, TAILLE_MAX_NOM, stdin);
+    if(fgets())
+    
+    
+    
+}
+
+void liste_qcm(){
+    
+}
 
 
 
