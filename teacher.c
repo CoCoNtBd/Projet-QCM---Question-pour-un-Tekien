@@ -12,11 +12,14 @@ void teacher_menu(){
     printf("\n");
     printf("1 : Créer un nouveau QCM\n");
     printf("2 : Lister les QCM existants\n");
-    printf("3 : Quitter le mode enseignant\n");
+    printf("3 : Revenir au mode principal\n");
     printf("\n");
     printf("Votre choix : ");
     do {
-        fgets(buffer, sizeof(buffer), stdin);
+        if(fgets(buffer, sizeof(buffer), stdin) == NULL){
+            printf("Erreur de lecture\n");
+            return;
+        }
         choix = atoi(buffer);
         if (choix < 1 || choix > 3)
             printf("Mode invalide, réessayez : ");
@@ -30,7 +33,7 @@ void teacher_menu(){
             void liste_qcm();
             break;
         case 3:
-            printf("Au revoir !");
+            afficher_menu();
             break;
     }
 }
@@ -38,7 +41,10 @@ void teacher_menu(){
 void teacher_login() {
     char password[128];
     printf("   Mot de passe : ");
-    fgets(password, sizeof(password), stdin);
+    if(fgets(password, sizeof(password), stdin) == NULL){
+        printf("Erreur lecture");
+        return;
+    }
     password[strcspn(password, "\n")] = '\0'; 
 
     if (strcmp(password, TEACHER_PASSWORD) == 0) {
@@ -55,7 +61,7 @@ void creer_qcm(){
     printf("CREATION D'UN NOUVEAU QCM\n");
     printf("Nom du nouveau qcm : ");
     fgets(q.nom, TAILLE_MAX_NOM, stdin);
-    if(fgets())
+    //if(fgets())
     
     
     
