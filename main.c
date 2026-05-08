@@ -5,6 +5,7 @@
 #include "teacher.h"
 #include "student.h"
 #include "qcm.h"
+#include "main.h"
 
 
 void afficher_menu(){
