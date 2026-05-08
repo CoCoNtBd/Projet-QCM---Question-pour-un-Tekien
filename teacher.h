@@ -1,11 +1,12 @@
 #ifndef TEACHER_H
 #define TEACHER_H
 
-#define TEACHER_PASSWORD "admin123"
+#define MDP_DEFAUT "admin123"
 
 void teacher_login();
-
-void afficher_menu();
+void teacher_menu();
+void creer_qcm();
+void liste_qcm();
+void changer_mot_de_passe();
 
 #endif
-
