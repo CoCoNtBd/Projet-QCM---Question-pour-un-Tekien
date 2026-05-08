@@ -7,11 +7,7 @@
 #include "qcm.h"
 
 
-
-
-
-
-int main(){
+void afficher_menu(){
     int mode;
     char buffer[50];
     
@@ -20,7 +16,10 @@ int main(){
     printf("Votre choix : ");
     
     do {
-        fgets(buffer, sizeof(buffer), stdin);
+        if(fgets(buffer, sizeof(buffer), stdin) == NULL){
+            printf("Erreur de lecture");
+            return;
+        }
         mode = atoi(buffer);
         if (mode < 1 || mode > 3)
             printf("Mode invalide, réessayez : ");
@@ -38,6 +37,12 @@ int main(){
             printf("Au revoir !");
             break;
     }
+}
+
+
+
+int main(){
+    afficher_menu();
     
     return 0;
 }
