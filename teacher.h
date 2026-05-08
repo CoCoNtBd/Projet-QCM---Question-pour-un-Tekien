@@ -5,5 +5,7 @@
 
 void teacher_login();
 
+void afficher_menu();
+
 #endif
 
