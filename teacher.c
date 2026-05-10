@@ -116,10 +116,69 @@ void teacher_login() {
 
 void creer_qcm() {
     QCM q = {0};
+    char buffer[8];
     printf("CREATION D'UN NOUVEAU QCM\n");
     printf("Nom du nouveau qcm : ");
     fgets(q.nom, TAILLE_MAX_NOM, stdin);
+    if(strlen(q.nom) == 0){
+        printf("Nom invalide");
+        creer_qcm();
+    }
+    
+    printf("------- Paramètres du QCM -------");
+    
+    printf("Points négatifs en cas de mauvaise réponse ? (o/n) : ");
+    fgets(buffer, sizeof(buffer), stdin);
+    if(buffer == 'o' || buffer == 'O'){
+        q.negatif = 1;
+    }else if(buffer == 'n' || buffer == 'N'){
+        q.negatif = 0;
+    }
+    
+    printf("Plusieurs bonnes réponses possibles par question ? (o/n) : ");
+    fgets(buffer, sizeof(buffer), stdin);
+    if(buffer == 'o' || buffer == 'O'){
+        q.plsreponses = 1;
+    }else if(buffer == 'n' || buffer == 'N'){
+        q.plsreponses = 0;
+    }
+    
+    printf("Mode sequentiel (obligation de répondre avant de passer ? (o/n) : ");
+    fgets(buffer, sizeof(buffer), stdin);
+    if(buffer == 'o' || buffer == 'O'){
+        q.sequentiel = 1;
+    }else if(buffer == 'n' || buffer == 'N'){
+        q.sequentiel = 0;
+    }
+    
+    printf("Entrez le nombre de questions du QCM pouvant aller de 1 à %d :  ", MAX_QUESTIONS);
+    if(fgets(q.num_questions, sizeof(q.num_questions), stdin) == NULL || q.num_questions < 1 || q.num_questions > MAX_QUESTIONS){
+        printf("Nombre de questions invalide");
+    }
+    
+    for(int i = 0; i < q.num_questions; i++){
+        printf(" ------- Question %d/%d -------\n", i+1, q.num_questions);
+        
+    }
+    
 }
+
+
+void ajouter_question(Question *q){
+    printf("Entrez un énoncé : ");
+    fgets(q->text, sizeof(TAILLE_MAX_TEXTE), stdin);
+    
+    printf("Nombre de réponses possibles (2 à %d) : ", MAX_OPTIONS);
+    if(fgets(q->num_options, sizeof(MAX_OPTIONS), stdin) == NULL || q->num_options < 2 || q->num_options > MAX_OPTIONS){
+        q->num_options = 4;
+    }
+    
+    
+}
+
+
+
+
 
 void liste_qcm() {
 }
