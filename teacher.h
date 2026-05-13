@@ -8,5 +8,6 @@ void teacher_menu();
 void creer_qcm();
 void liste_qcm();
 void changer_mot_de_passe();
+void ajouter_question(Question* q);
 
 #endif
