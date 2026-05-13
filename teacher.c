@@ -119,35 +119,47 @@ void creer_qcm() {
     char buffer[8];
     printf("CREATION D'UN NOUVEAU QCM\n");
     printf("Nom du nouveau qcm : ");
-    fgets(q.nom, TAILLE_MAX_NOM, stdin);
-    if(strlen(q.nom) == 0){
+    if(fgets(q.nom, TAILLE_MAX_NOM, stdin) == NULL){
+        printf("Erreur d'écriture");
+        return;
+    }
+    while(strlen(q.nom) == 0){
         printf("Nom invalide");
-        creer_qcm();
+        fgets(q.nom, TAILLE_MAX_NOM, stdin);
     }
     
     printf("------- Paramètres du QCM -------");
     
     printf("Points négatifs en cas de mauvaise réponse ? (o/n) : ");
-    fgets(buffer, sizeof(buffer), stdin);
-    if(buffer == 'o' || buffer == 'O'){
+    if(fgets(buffer, sizeof(buffer), stdin) == NULL){
+        printf("Erreur d'écriture");
+        return;
+    }
+    if(buffer == "o" || buffer == "O"){
         q.negatif = 1;
-    }else if(buffer == 'n' || buffer == 'N'){
+    }else if(buffer == "n" || buffer == "N"){
         q.negatif = 0;
     }
     
     printf("Plusieurs bonnes réponses possibles par question ? (o/n) : ");
-    fgets(buffer, sizeof(buffer), stdin);
-    if(buffer == 'o' || buffer == 'O'){
+    if(fgets(buffer, sizeof(buffer), stdin) == NULL){
+        printf("Erreur d'écriture");
+        return;
+    }
+    if(buffer == "o" || buffer == "O"){
         q.plsreponses = 1;
-    }else if(buffer == 'n' || buffer == 'N'){
+    }else if(buffer == "n" || buffer == "N"){
         q.plsreponses = 0;
     }
     
     printf("Mode sequentiel (obligation de répondre avant de passer ? (o/n) : ");
-    fgets(buffer, sizeof(buffer), stdin);
-    if(buffer == 'o' || buffer == 'O'){
+    if(fgets(buffer, sizeof(buffer), stdin) == NULL){
+        printf("Erreur d'écriture");
+        return;
+    }
+    if(buffer == "o" || buffer == "O"){
         q.sequentiel = 1;
-    }else if(buffer == 'n' || buffer == 'N'){
+    }else if(buffer == "n" || buffer == "N"){
         q.sequentiel = 0;
     }
     
@@ -170,10 +182,44 @@ void ajouter_question(Question *q){
     
     printf("Nombre de réponses possibles (2 à %d) : ", MAX_OPTIONS);
     if(fgets(q->num_options, sizeof(MAX_OPTIONS), stdin) == NULL || q->num_options < 2 || q->num_options > MAX_OPTIONS){
+        //si il y a une erreur de saisie de l'enseignant nb de réponses par défaut : 4
+        printf("Erreur de saisie, mise par défaut du nombre de réponses à 4");
         q->num_options = 4;
     }
     
+    for(int i = 0; i< q->num_options; i++){
+        printf("Option %c", 'A' + i);
+        if(fgets(q->options[i], sizeof(TAILLE_MAX_OPTIONS), stdin) == NULL){
+            printf("Erreur de saisie ");
+            return;
+        }
+    }
     
+    char rep[MAX_OPTIONS + 2];
+    q->num_correct = 0;
+    do{
+        printf("Lettre(s) de la/les bonne(s) réponse(s) (ex: A ou AC) : ");
+        if(fgets(rep, sizeof(rep), stdin) == NULL){
+            printf("Erreur saisie");
+            return;
+        }
+        
+        for(int k = 0; rep[k] != '\0'; k++){
+            char c = rep[k];
+            int idx = -1;
+            if(c >= 'A' && c<'A' + q->num_questions){
+                idx = c-'A';
+            }
+            if(c >= 'a' && c<'a' + q->num_questions){
+                idx = c-'a';
+            }
+            if(idx>= 0 && q->correct[idx]!=0){
+                q->correct[idx] = 1;
+                q->num_correct++;
+            }
+            
+        }
+    }while(q->num_correct == 0);
 }
 
 
