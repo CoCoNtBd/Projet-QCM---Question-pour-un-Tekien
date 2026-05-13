@@ -170,6 +170,21 @@ void creer_qcm() {
     
     for(int i = 0; i < q.num_questions; i++){
         printf(" ------- Question %d/%d -------\n", i+1, q.num_questions);
+        ajouter_question(&q.questions[i]);
+        if(q.plsreponses == 0 && q.questions[i].num_correct > 1){
+            printf("Attention : ce QCM est en réponse unique seule la première bonne réponse sera conservée.\n");
+            int found = 0;
+            for(int k = 0; k<q.questions[i].num_options; k++){
+                if(q.question[i].correct[k]){
+                    if(found){
+                        q.questions[i].correct[k] = 0
+                    }else{
+                        found = 1;
+                    }
+                }
+            }
+            q.questions[i].num_correct = 1;
+        }
         
     }
     
