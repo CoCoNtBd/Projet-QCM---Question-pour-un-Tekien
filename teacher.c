@@ -213,7 +213,7 @@ void ajouter_question(Question *q){
             if(c >= 'a' && c<'a' + q->num_questions){
                 idx = c-'a';
             }
-            if(idx>= 0 && q->correct[idx]!=0){
+            if (idx >= 0 && q->correct[idx] == 0){
                 q->correct[idx] = 1;
                 q->num_correct++;
             }
