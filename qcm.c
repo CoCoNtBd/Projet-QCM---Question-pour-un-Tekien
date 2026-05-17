@@ -15,15 +15,10 @@ void sauvegarder_QCM(QCM* qcm){
     fprintf(f,"%d;%d;%d\n", q.negatif, q.plsreponses, q.sequentiel);
     fprintf(f,"%d\n", q.num_questions);
     for(int j = 0; j<q.num_questions; j++){
+        fprintf(f,"%s\n", q[j]->texte);
+        fprintf(f,"%d\n", q[j]->num_correct);
         
     }
 }
 
 
-void sauvegarder_question(Question* q){
-    fprintf(f,"%s\n", q->texte);
-    fprintf(f,"%d\n", q->num_correct);
-    for(int k = 0; k<q->num_correct; k++){
-        fprintf(f,"%c:%s", 'A'+k, q->correct[i]);
-    }
-}
