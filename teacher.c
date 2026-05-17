@@ -170,14 +170,14 @@ void creer_qcm() {
     
     for(int i = 0; i < q.num_questions; i++){
         printf(" ------- Question %d/%d -------\n", i+1, q.num_questions);
-        ajouter_question(&q.questions[i]);
+        ajouter_question(&q.question[i]);
         if(q.plsreponses == 0 && q.questions[i].num_correct > 1){
             printf("Attention : ce QCM est en réponse unique seule la première bonne réponse sera conservée.\n");
             int found = 0;
             for(int k = 0; k<q.questions[i].num_options; k++){
                 if(q.question[i].correct[k]){
                     if(found){
-                        q.questions[i].correct[k] = 0
+                        q.questions[i].correct[k] = 0;
                     }else{
                         found = 1;
                     }
@@ -187,13 +187,13 @@ void creer_qcm() {
         }
         
     }
-    
+    sauvegarder_QCM(&q);
 }
 
 
 void ajouter_question(Question *q){
     printf("Entrez un énoncé : ");
-    fgets(q->text, sizeof(TAILLE_MAX_TEXTE), stdin);
+    fgets(q->texte, TAILLE_MAX_TEXTE, stdin);
     
     printf("Nombre de réponses possibles (2 à %d) : ", MAX_OPTIONS);
     if(fgets(q->num_options, sizeof(MAX_OPTIONS), stdin) == NULL || q->num_options < 2 || q->num_options > MAX_OPTIONS){
@@ -204,7 +204,7 @@ void ajouter_question(Question *q){
     
     for(int i = 0; i< q->num_options; i++){
         printf("Option %c", 'A' + i);
-        if(fgets(q->options[i], sizeof(TAILLE_MAX_OPTIONS), stdin) == NULL){
+        if(fgets(q->options[i], TAILLE_MAX_OPTIONS, stdin) == NULL){
             printf("Erreur de saisie ");
             return;
         }
@@ -222,10 +222,10 @@ void ajouter_question(Question *q){
         for(int k = 0; rep[k] != '\0'; k++){
             char c = rep[k];
             int idx = -1;
-            if(c >= 'A' && c<'A' + q->num_questions){
+            if(c >= 'A' && c<'A' + q->num_options){
                 idx = c-'A';
             }
-            if(c >= 'a' && c<'a' + q->num_questions){
+            if(c >= 'a' && c<'a' + q->num_options){
                 idx = c-'a';
             }
             if (idx >= 0 && q->correct[idx] == 0){
