@@ -18,6 +18,7 @@ typedef struct{
 
 typedef struct{
     char nom[TAILLE_MAX_NOM];
+    char categorie[TAILLE_MAX_NOM];
     int negatif;
     int plsreponses;
     int sequentiel;
