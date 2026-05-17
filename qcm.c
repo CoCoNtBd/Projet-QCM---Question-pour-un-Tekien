@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <string.h>
+#include "qcm.h"
+
 
 void sauvegarder_QCM(QCM* qcm){
     char nomFichier[100];
