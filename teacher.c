@@ -98,7 +98,7 @@ void teacher_login() {
     lire_mot_de_passe(mdp_actuel, sizeof(mdp_actuel));
 
     char password[128];
-    printf("   Mot de passe : ");
+    printf("\nMot de passe : ");
     if (fgets(password, sizeof(password), stdin) == NULL) {
         printf("Erreur lecture\n");
         return;
@@ -116,7 +116,7 @@ void teacher_login() {
 
 void creer_qcm() {
     QCM q = {0};
-    char buffer[16];
+    char buffer[8];
     printf("CREATION D'UN NOUVEAU QCM\n");
     printf("Nom du nouveau qcm : ");
     if(fgets(q.nom, TAILLE_MAX_NOM, stdin) == NULL){
@@ -164,34 +164,32 @@ void creer_qcm() {
     }
     
     printf("Entrez le nombre de questions du QCM pouvant aller de 1 à %d :  ", MAX_QUESTIONS);
-    do{
-        printf("Nombre de questions (1 à %d) : ", MAX_QUESTIONS);
-        if(fgets(buffer, sizeof(buffer), stdin) == NULL){
+    do {
+        if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
             printf("Erreur de lecture\n");
             return;
         }
         q.num_questions = atoi(buffer);
-        if(q.num_questions < 1 || q.num_questions > MAX_QUESTIONS){
-            printf("Nombre invalide, réessayez.\n");
-        }
-    }while(q.num_questions < 1 || q.num_questions > MAX_QUESTIONS);
+        if (q.num_questions < 1 || q.num_questions > MAX_QUESTIONS)
+            printf("Nombre invalide, entrez une valeur entre 1 et %d : ", MAX_QUESTIONS);
+    } while (q.num_questions < 1 || q.num_questions > MAX_QUESTIONS);
     
     for(int i = 0; i < q.num_questions; i++){
         printf(" ------- Question %d/%d -------\n", i+1, q.num_questions);
         ajouter_question(&q.question[i]);
-        if(q.plsreponses == 0 && q.questions[i].num_correct > 1){
+        if(q.plsreponses == 0 && q.question[i].num_correct > 1){
             printf("Attention : ce QCM est en réponse unique seule la première bonne réponse sera conservée.\n");
             int found = 0;
-            for(int k = 0; k<q.questions[i].num_options; k++){
+            for(int k = 0; k<q.question[i].num_options; k++){
                 if(q.question[i].correct[k]){
                     if(found){
-                        q.questions[i].correct[k] = 0;
+                        q.question[i].correct[k] = 0;
                     }else{
                         found = 1;
                     }
                 }
             }
-            q.questions[i].num_correct = 1;
+            q.question[i].num_correct = 1;
         }
         
     }
@@ -200,30 +198,31 @@ void creer_qcm() {
 
 
 void ajouter_question(Question *q){
+    char buffer[16];
+ 
     printf("Entrez un énoncé : ");
-    if(fgets(q->texte, TAILLE_MAX_TEXTE, stdin) == NULL){
-        printf("Erreur de lecture");
+    if (fgets(q->texte, TAILLE_MAX_TEXTE, stdin) == NULL) {
+        printf("Erreur de lecture\n");
         return;
     }
-
-    char buffer[16];
-    do{
-        printf("Nombre de réponses possibles (2 à %d) : ", MAX_OPTIONS);
-        if(fgets(buffer, sizeof(buffer), stdin) == NULL){
-            printf("Erreur de saisie, nombre de réponses mis à 4 par défaut\n");
+ 
+    printf("Nombre de réponses possibles (2 à %d) : ", MAX_OPTIONS);
+    do {
+        if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
+            printf("Erreur de saisie, mise par défaut à 4\n");
             q->num_options = 4;
             break;
         }
         q->num_options = atoi(buffer);
-        if(q->num_options < 2 || q->num_options > MAX_OPTIONS){
-            printf("Nombre invalide, réessayez.\n");
+        if (q->num_options < 2 || q->num_options > MAX_OPTIONS) {
+            printf("Valeur invalide (2 à %d), réessayez : ", MAX_OPTIONS);
         }
-    }while(q->num_options < 2 || q->num_options > MAX_OPTIONS);
-    
-    for(int i = 0; i< q->num_options; i++){
-        printf("Option %c", 'A' + i);
-        if(fgets(q->options[i], TAILLE_MAX_OPTIONS, stdin) == NULL){
-            printf("Erreur de saisie ");
+    } while (q->num_options < 2 || q->num_options > MAX_OPTIONS);
+ 
+    for (int i = 0; i < q->num_options; i++) {
+        printf("Option %c : ", 'A' + i);
+        if (fgets(q->options[i], TAILLE_MAX_OPTIONS, stdin) == NULL) {
+            printf("Erreur de saisie\n");
             return;
         }
     }
@@ -260,4 +259,13 @@ void ajouter_question(Question *q){
 
 
 void liste_qcm() {
+    FILE* f = fopen("qcm_list.txt", "r");
+	if (f == NULL) {
+		printf("Impossible d'ouvrir le fichier.\n");
+	}
+	char ligne[256];
+	while (fgets(ligne, sizeof(ligne), f) != NULL) {
+		printf("%s", ligne);
+	}
+	fclose(f);
 }

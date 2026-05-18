@@ -1,5 +1,6 @@
 #ifndef TEACHER_H
 #define TEACHER_H
+#include "qcm.h"
 
 #define MDP_DEFAUT "admin123"
 

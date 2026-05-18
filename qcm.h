@@ -7,7 +7,6 @@
 #define TAILLE_MAX_OPTIONS 256
 #define TAILLE_MAX_NOM 64
 
-
 typedef struct{
     char texte[TAILLE_MAX_TEXTE];
     char options[MAX_OPTIONS][TAILLE_MAX_OPTIONS];
@@ -25,5 +24,9 @@ typedef struct{
     int num_questions;
     Question question[MAX_QUESTIONS];
 }QCM;
+
+char** qcm_list(int* choix);
+void sauvegarder_QCM(QCM* qcm);
+void charger_QCM(char* f, QCM* qcm);
 
 #endif

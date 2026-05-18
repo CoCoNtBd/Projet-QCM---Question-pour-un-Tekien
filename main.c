@@ -31,11 +31,11 @@ void afficher_menu(){
             teacher_login();
             break;
         case 2:
-            printf("Vous entrez dans le mode ETUDIANT\n");
-            printf("Chargement ...");
+            printf("\nVous entrez dans le mode ETUDIANT\n\n");
+            student_menu();
             break;
         case 3:
-            printf("Au revoir !");
+            printf("\nAu revoir !\n");
             break;
     }
 }

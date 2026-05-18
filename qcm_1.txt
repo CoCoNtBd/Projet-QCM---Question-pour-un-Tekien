@@ -1,0 +1,29 @@
+QCM 1
+Categorie 1
+1;1;1
+3
+2x2?
+3
+C'est 3
+C'est 4
+C'est 5
+2
+1
+2
+2x10?
+3
+C'est 20
+C'est 30
+C'est 40
+1
+0
+2x100?
+4
+C'est 100
+C'est 200
+C'est 300
+C'est 400
+3
+1
+2
+3
