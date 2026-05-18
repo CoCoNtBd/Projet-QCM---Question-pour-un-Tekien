@@ -116,7 +116,7 @@ void teacher_login() {
 
 void creer_qcm() {
     QCM q = {0};
-    char buffer[8];
+    char buffer[16];
     printf("CREATION D'UN NOUVEAU QCM\n");
     printf("Nom du nouveau qcm : ");
     if(fgets(q.nom, TAILLE_MAX_NOM, stdin) == NULL){
@@ -164,9 +164,17 @@ void creer_qcm() {
     }
     
     printf("Entrez le nombre de questions du QCM pouvant aller de 1 à %d :  ", MAX_QUESTIONS);
-    if(fgets(q.num_questions, sizeof(q.num_questions), stdin) == NULL || q.num_questions < 1 || q.num_questions > MAX_QUESTIONS){
-        printf("Nombre de questions invalide");
-    }
+    do{
+        printf("Nombre de questions (1 à %d) : ", MAX_QUESTIONS);
+        if(fgets(buffer, sizeof(buffer), stdin) == NULL){
+            printf("Erreur de lecture\n");
+            return;
+        }
+        q.num_questions = atoi(buffer);
+        if(q.num_questions < 1 || q.num_questions > MAX_QUESTIONS){
+            printf("Nombre invalide, réessayez.\n");
+        }
+    }while(q.num_questions < 1 || q.num_questions > MAX_QUESTIONS);
     
     for(int i = 0; i < q.num_questions; i++){
         printf(" ------- Question %d/%d -------\n", i+1, q.num_questions);
@@ -193,14 +201,24 @@ void creer_qcm() {
 
 void ajouter_question(Question *q){
     printf("Entrez un énoncé : ");
-    fgets(q->texte, TAILLE_MAX_TEXTE, stdin);
-    
-    printf("Nombre de réponses possibles (2 à %d) : ", MAX_OPTIONS);
-    if(fgets(q->num_options, sizeof(MAX_OPTIONS), stdin) == NULL || q->num_options < 2 || q->num_options > MAX_OPTIONS){
-        //si il y a une erreur de saisie de l'enseignant nb de réponses par défaut : 4
-        printf("Erreur de saisie, mise par défaut du nombre de réponses à 4");
-        q->num_options = 4;
+    if(fgets(q->texte, TAILLE_MAX_TEXTE, stdin) == NULL){
+        printf("Erreur de lecture");
+        return;
     }
+
+    char buffer[16];
+    do{
+        printf("Nombre de réponses possibles (2 à %d) : ", MAX_OPTIONS);
+        if(fgets(buffer, sizeof(buffer), stdin) == NULL){
+            printf("Erreur de saisie, nombre de réponses mis à 4 par défaut\n");
+            q->num_options = 4;
+            break;
+        }
+        q->num_options = atoi(buffer);
+        if(q->num_options < 2 || q->num_options > MAX_OPTIONS){
+            printf("Nombre invalide, réessayez.\n");
+        }
+    }while(q->num_options < 2 || q->num_options > MAX_OPTIONS);
     
     for(int i = 0; i< q->num_options; i++){
         printf("Option %c", 'A' + i);
